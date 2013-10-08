@@ -31,7 +31,7 @@ http_proxy = "http://localhost:8086"
 use_proxy = True
 http_proxys = {'http':http_proxy}
 wtfdir = 'test'
-mode = 'see' # see, down
+mode = 'down' # see, down
 analytics_file = 'test.txt'
 forum_ids = {'YM' : 230, 'WM' : 143}
 
@@ -264,9 +264,9 @@ def get_all_analytics():
     
 
 def main():
-    #down_imgs_torrents()
+    down_imgs_torrents()
     # 下载所有topics，排序，输入文件
-    get_all_analytics()
+    #get_all_analytics()
 
 start = time.time()
 if __name__ == '__main__':
