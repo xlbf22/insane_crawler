@@ -28,7 +28,7 @@ host = input('input target ip:')
 host = '38.103.161.147'
 base_url = 'http://' + host + '/forum/'
 http_proxy = "http://localhost:8086"
-use_proxy = True
+use_proxy = False
 http_proxys = {'http':http_proxy}
 wtfdir = 'test'
 mode = 'down' # see, down
@@ -265,7 +265,7 @@ def get_all_analytics():
 
 def main():
     down_imgs_torrents()
-    # ÏÂÔØËùÓÐtopics£¬ÅÅÐò£¬ÊäÈëÎÄ¼þ
+    # ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½topicsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
     #get_all_analytics()
 
 start = time.time()
