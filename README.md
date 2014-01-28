@@ -1,10 +1,11 @@
 insane_crawler
 ==============
 
-Download best ooxx videos torrents with images, and sort them by our rank
+* Download best ooxx-video torrents with images, and sort them by our rank.
+* The dir would expands to 20G one night, so take care of your hard disks.
 
 ####Todo
-1. implement in scrapy
-2. live statistics in django
-3. cluster analysis
-4. separate settings
+1. Scrapy: implement for further works.
+2. Django: live statistics.
+3. DM: cluster analysis
+4. MISC: separate settings
