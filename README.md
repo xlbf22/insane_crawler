@@ -1,7 +1,7 @@
 insane_crawler
 ==============
 
-download best ox videos, and sort them by our rank
+download best ooxx videos, and sort them by our rank
 
 ####Todo
 1. implement in scrapy
