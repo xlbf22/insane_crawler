@@ -29,16 +29,16 @@ host = '38.103.161.147'
 base_url = 'http://' + host + '/forum/'
 http_proxy = "http://localhost:8086"
 use_proxy = False
-http_proxys = {'http':http_proxy}
+http_proxys = {'http': http_proxy}
 wtfdir = 'test'
 mode = 'down' # see, down
 analytics_file = 'test.txt'
-forum_ids = {'YM' : 230, 'WM' : 143}
+forum_ids = {'YM': 230, 'WM': 143}
 
-text_order = ['star','url','title','comment','view','time']
+text_order = ['star', 'url', 'title', 'comment', 'view', 'time']
 
 def get_valid_filename(filename):
-    keepcharacters = (' ','.','_')
+    keepcharacters = (' ', '.', '_')
     return "".join(c for c in filename if c.isalnum() or c in keepcharacters).rstrip()
 
 def get_data_from_req(req):
@@ -52,7 +52,7 @@ def get_data_from_req(req):
             attempts += 1
             print(e)
     return binary
-    
+
 
 def get_content_from_url(url):
     attempts = 0
@@ -94,7 +94,7 @@ def down_imgs_from_url(url):
     os.makedirs(dirname, exist_ok = True)
     imgs = re.findall('img src=\"(http[^\"]+)\"', content, re.M | re.S)
     torrents = re.findall('a href=\"(?P<url>attach[=0-9a-zA-Z\.\?]+).*?>(?P<title>[^<>\"]*?torrent)', content, re.M | re.S)
-    
+
     imgs = set(imgs)
     torrent_set = set(torrents)
     print(imgs, torrent_set)
@@ -110,17 +110,17 @@ def down_link_imgs_torrents(topic):
     dirname = get_valid_filename(topic['title'])
     if not os.path.exists(dirname):
         os.makedirs(dirname)
-    
+
     content = get_content_from_url(topic['url'])
 
     imgs = re.findall('img src=\"(http[^\"]+)\"', content, re.M | re.S)
     torrents = re.findall('a href=\"(?P<url>attach[=0-9a-zA-Z\.\?]+).*?>(?P<title>[^<>\"]*?torrent)', content, re.M | re.S)
-    
+
     imgs = set(imgs)
     st = set(torrents)
     #t = re.findall('a href=\"attach.*?torrent', content, re.M | re.S)
     #t = re.findall('a href=\"(?P<torrent>attach[=0-9a-zA-Z\.\?]+).*?>(.*?torrent)', content, re.M | re.S)
-    
+
     print(imgs, st)
     for img in imgs:
         down_link(img, dirname + '/' + os.path.basename(img))
@@ -131,7 +131,7 @@ def down_link_imgs_torrents(topic):
 
 def get_links_from_page(url):
     print('GET:' + url)
-    
+
     content = get_content_from_url(url)
     if content == '':
         return
@@ -147,7 +147,7 @@ def get_links_from_page(url):
     topics = dict()
     # GET: 1-url 2-title 3-star 4-comment 5-view 6-time
     p = '<span id.*?<a href=\"(?P<url>.*?)\".*?>(?P<title>.*?)</a>.*?<img.*?<td.*?author.*?img.*?>.*?(?P<star>\d+).*?</cite>.*?<td.*?nums\">.*?(?P<comment>\d+).*?<em>(?P<view>\d+).*?lastpost.*?<a href.*?>(?P<time>.*?)</a>'
-    
+
     try:
         for h in topics_html:
             gd = re.search(p, h, re.M | re.S).groupdict()
@@ -157,7 +157,7 @@ def get_links_from_page(url):
             print(topics[topic_index])
     except Exception as e:
         print(e)
-    
+
     if mode is 'down':
         for i in topics:
             down_link_imgs_torrents(topics[i])
@@ -188,14 +188,14 @@ class ThreadUrl(threading.Thread):
 
 def test_main():
     install_proxy()
-    
+
     url = base_url + 'thread-4917240-1-1.html'
     down_imgs_from_url(url)
 
 def down_imgs_torrents():
     install_proxy()
     base_forum_url = base_url + 'forum-{0}-{1}.html'
-    
+
     forum_ids = {'YM' : 230, 'WM' : 143}
     #urls = map(base_forum_url.format, forum_ids.values())
 
@@ -226,14 +226,14 @@ def write_topic_list_to_file(topic_list, filename = 'test.txt'):
             binary = (str(value) + ',').encode('utf8')
             f.write(binary)
         f.write('\n'.encode('utf8'))
-    
+
 
 def down_topics_and_store(forum):
     install_proxy()
     base_forum_url = base_url + 'forum-{0}-{1}.html'
     #base_forum_url.format(forum_id, page)
     topics = dict();
-    
+
     for page in range(1,1024):
         topics.update(get_links_from_page(base_forum_url.format(forum, page)))
 
@@ -245,14 +245,14 @@ def down_topics_and_store(forum):
     topic_list.sort(key=lambda x: int(x['star']), reverse = True)
     write_topic_list_to_file(topic_list, filename = str(forum) + analytics_file)
 
-    return 
+    return
 
 class ThreadDownTopicsAnalytics(threading.Thread):
     forum_id = None
     def __init__(self, forum_id):
         threading.Thread.__init__(self)
         self.forum_id = forum_id
-    
+
     def run(self):
         down_topics_and_store(self.forum_id)
 
@@ -261,7 +261,7 @@ def get_all_analytics():
     f2 = ThreadDownTopicsAnalytics(forum_ids['WM'])
     f1.start()
     f2.start()
-    
+
 
 def main():
     down_imgs_torrents()
