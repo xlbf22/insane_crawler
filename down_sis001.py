@@ -167,7 +167,7 @@ def get_links_from_page(url):
 def install_proxy():
     if use_proxy == False:
         return
-    proxy_support = urllib.request.ProxyHandler({"http":http_proxy})
+    proxy_support = urllib.request.ProxyHandler({"http": http_proxy})
     opener = urllib.request.build_opener(proxy_support)
     urllib.request.install_opener(opener)
     return
