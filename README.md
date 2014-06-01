@@ -1,6 +1,7 @@
 insane_crawler
 ==============
 
+* NOTE: the ip in the code is unavaiable now, plz find the ip work by yourself!
 * Download best ooxx-video torrents with images, and sort them by our rank.
 * The directory would expand to 20Gb one night, so take care of your hard disks.
 
