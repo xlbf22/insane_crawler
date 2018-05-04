@@ -30,10 +30,13 @@ base_url = 'http://' + host + '/forum/'
 http_proxy = "http://localhost:8086"
 use_proxy = False
 http_proxys = {'http': http_proxy}
-wtfdir = 'test'
+wtfdir = 'test9'
 mode = 'down' # see, down
 analytics_file = 'test.txt'
-forum_ids = {'YM': 230, 'WM': 143}
+#YouMa:230
+#WuMa:143
+# forum_ids = {'YM': 230, 'WM': 143}
+forum_ids = {'WM': 143}
 
 text_order = ['star', 'url', 'title', 'comment', 'view', 'time']
 
@@ -97,7 +100,7 @@ def down_imgs_from_url(url):
 
     imgs = set(imgs)
     torrent_set = set(torrents)
-    print(imgs, torrent_set)
+    print('A2:', imgs, torrent_set)
     for img in imgs:
         down_link(img, dirname + '/' + get_valid_filename(os.path.basename(img)))
     for torrent in torrent_set:
@@ -106,7 +109,7 @@ def down_imgs_from_url(url):
     return
 
 def down_link_imgs_torrents(topic):
-    print('GET:', topic)
+    print('GET1:', topic)
     dirname = get_valid_filename(topic['title'])
     if not os.path.exists(dirname):
         os.makedirs(dirname)
@@ -121,7 +124,7 @@ def down_link_imgs_torrents(topic):
     #t = re.findall('a href=\"attach.*?torrent', content, re.M | re.S)
     #t = re.findall('a href=\"(?P<torrent>attach[=0-9a-zA-Z\.\?]+).*?>(.*?torrent)', content, re.M | re.S)
 
-    print(imgs, st)
+    print('A1:', imgs, st)
     for img in imgs:
         down_link(img, dirname + '/' + os.path.basename(img))
     for t in st:
@@ -130,7 +133,7 @@ def down_link_imgs_torrents(topic):
     return
 
 def get_links_from_page(url):
-    print('GET:' + url)
+    print('GET2:' + url)
 
     content = get_content_from_url(url)
     if content == '':
@@ -154,7 +157,7 @@ def get_links_from_page(url):
             gd['url'] = base_url + gd['url']
             topic_index = gd['title']
             topics[topic_index] = gd
-            print(topics[topic_index])
+            print('A0:', topics[topic_index])
     except Exception as e:
         print(e)
 
@@ -195,8 +198,6 @@ def test_main():
 def down_imgs_torrents():
     install_proxy()
     base_forum_url = base_url + 'forum-{0}-{1}.html'
-
-    forum_ids = {'YM' : 230, 'WM' : 143}
     #urls = map(base_forum_url.format, forum_ids.values())
 
     if not os.path.exists(wtfdir):
